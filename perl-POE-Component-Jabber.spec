@@ -35,7 +35,7 @@ POE::Filter::Jabber is provided which requires XML::Parser and
 sends and receives data as Jabber::NodeFactory::Node objects.
 
 POE::Component::Jabber::Auth implements authentication with the
-jabber server. This would be a good module to look at as it
+Jabber server. This would be a good module to look at as it
 does it in much the way an application would interface with
 POE::Component::Jabber by registering for the IQ event.
 
