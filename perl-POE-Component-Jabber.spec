@@ -9,7 +9,7 @@ Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
 Summary(pl):	POE::Component::Jabber - komponent POE do dostêpu do serwerów Jabbera
 Name:		perl-POE-Component-Jabber
 Version:	0.2
-Release:	1
+Release:	2
 License:	unknown
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version}.tar.gz
@@ -17,8 +17,8 @@ Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 %if %{with tests}
-BuildRequires:	perl(Jabber::Connection) >= 0.02
 BuildRequires:	perl-Digest-SHA1 >= 1.03
+BuildRequires:	perl-Jabber-Connection >= 0.02
 BuildRequires:	perl-POE
 BuildRequires:	perl-XML-Parser >= 2.29
 %endif
