@@ -10,7 +10,7 @@ Summary(pl):	POE::Component::Jabber - komponent POE do dostêpu do serwerów Jabbe
 Name:		perl-POE-Component-Jabber
 Version:	0.2
 Release:	1
-License:	?
+License:	unknown
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version}.tar.gz
 # Source0-md5:	4da1e6b4f7c02c1267d9613c10289a40
@@ -66,7 +66,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 cp -r examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
