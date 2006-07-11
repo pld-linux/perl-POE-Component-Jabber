@@ -55,6 +55,17 @@ POE::Component::Jabber poprzez rejestracjê dla zdarzenia IQ.
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
 
+
+# KUUUUUUUUUUUUUUUUUUUUUUUUU
+# rpmowy system wykrywani zaleznosci nie radzi sobie
+# z use const ...
+# dlatego ta paczka jest broken
+# solution sa 2
+# noautodep, i reczne
+# patch naprawiajacy use wewnatrz konstrukcji
+# ja wole v(2)
+# dobranoc
+
 %build
 %{__perl} Makefile.PL \
 	INSTALLDIRS=vendor \
