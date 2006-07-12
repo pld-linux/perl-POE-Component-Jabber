@@ -1,0 +1,397 @@
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/Component.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/Component.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/Component.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/Component.pm	2006-07-12 22:53:43.000000000 +0200
+@@ -1,6 +1,5 @@
+ package POE::Component::Jabber::Client::Component;
+ use Filter::Template;
+-const XNode POE::Filter::XML::Node
+ use warnings;
+ use strict;
+ 
+@@ -161,7 +160,7 @@
+ {
+ 	my ($kernel, $heap) = @_[KERNEL, HEAP];
+ 
+-	my $node = XNode->new('handshake');
++	my $node = POE::Filter::XML::Node->new('handshake');
+ 	$node->data(&sha1_hex($heap->{'sid'}.$heap->{'CONFIG'}->{'password'}));
+ 	$kernel->yield('output_handler', $node);
+ 	return;
+@@ -182,7 +181,7 @@
+ {
+ 	my ($kernel, $heap) = @_[KERNEL, HEAP];
+ 
+-	my $element = XNode->new('stream:stream',
++	my $element = POE::Filter::XML::Node->new('stream:stream',
+ 	['to', $heap->{'CONFIG'}->{'hostname'}, 
+ 	'xmlns', $heap->{'CONFIG'}->{'xmlns'},
+ 	'xmlns:stream', $heap->{'CONFIG'}->{'stream'}]
+@@ -215,7 +214,7 @@
+ 	if ($heap->{'CONFIG'}->{'debug'})
+ 	{
+ 		my $xml;
+-		if (ref $data eq 'XNode')
++		if (ref $data eq 'POE::Filter::XML::Node')
+ 		{
+ 			$xml = $data->to_str();
+ 		} else {
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/J2.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/J2.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/J2.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/J2.pm	2006-07-12 22:54:22.000000000 +0200
+@@ -1,6 +1,5 @@
+ package POE::Component::Jabber::Client::J2;
+ use Filter::Template;
+-const XNode POE::Filter::XML::Node
+ use warnings;
+ use strict;
+ 
+@@ -190,7 +189,7 @@
+ 
+ 	$heap->{'challenge'} = $sasl;
+ 
+-	my $node = XNode->new('auth',
++	my $node = POE::Filter::XML::Node->new('auth',
+ 	['xmlns', +NS_XMPP_SASL, 'mechanism', $mech]);
+ 
+ 	$kernel->yield('output_handler', $node);
+@@ -231,7 +230,7 @@
+ 	my $version		= $foundation->{'version'};
+ 	my $protocol	= $foundation->{'protocol'};
+ 
+-	my $element = XNode->new('stream:stream',
++	my $element = POE::Filter::XML::Node->new('stream:stream',
+ 	['to', $host, 
+ 	'xmlns', $xmlns, 
+ 	'xmlns:stream', $stream, 
+@@ -265,7 +264,7 @@
+ 	if ($heap->{'CONFIG'}->{'debug'})
+ 	{
+ 		my $xml;
+-		if (ref $data eq 'XNode')
++		if (ref $data eq 'POE::Filter::XML::Node')
+ 		{
+ 			$xml = $data->to_str();
+ 		
+@@ -305,7 +304,7 @@
+ 	$step = encode_base64($step);
+ 	$step =~ s/\s+//go;
+ 
+-	my $response = XNode->new('response', ['xmlns', +NS_XMPP_SASL]);
++	my $response = POE::Filter::XML::Node->new('response', ['xmlns', +NS_XMPP_SASL]);
+ 	$response->data($step);
+ 
+ 	$kernel->yield('output_handler', $response);
+@@ -385,7 +384,7 @@
+ 
+ 		if(exists($clist->{'starttls'}))
+ 		{
+-			my $starttls = XNode->new('starttls', ['xmlns', +NS_XMPP_TLS]);
++			my $starttls = POE::Filter::XML::Node->new('starttls', ['xmlns', +NS_XMPP_TLS]);
+ 			$kernel->yield('output_handler', $starttls);
+ 			return;
+ 		}
+@@ -411,7 +410,7 @@
+ 
+ 		if(!keys %$clist)
+ 		{
+-			my $bind = XNode->new('bind' , ['xmlns', +NS_JABBER_COMPONENT])
++			my $bind = POE::Filter::XML::Node->new('bind' , ['xmlns', +NS_JABBER_COMPONENT])
+ 				->attr('name', $heap->{'CONFIG'}->{'bind_domain'});
+ 			
+ 			if(defined($heap->{'CONFIG'}->{'bind_option'}))
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/Legacy.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/Legacy.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/Legacy.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/Legacy.pm	2006-07-12 22:54:27.000000000 +0200
+@@ -1,6 +1,6 @@
+ package POE::Component::Jabber::Client::Legacy;
+ use Filter::Template;
+-const XNode POE::Filter::XML::Node
++const POE::Filter::XML::Node POE::Filter::XML::Node
+ use warnings;
+ use strict;
+ 
+@@ -167,7 +167,7 @@
+ {
+ 	my ($self, $kernel, $heap) = @_[SESSION, KERNEL, HEAP];
+ 
+-	my $node = XNode->new('iq', ['type', +IQ_SET, 'id', 'AUTH']);
++	my $node = POE::Filter::XML::Node->new('iq', ['type', +IQ_SET, 'id', 'AUTH']);
+ 	my $query = $node->insert_tag('query', ['xmlns', +NS_JABBER_AUTH]);
+ 	$query->insert_tag('username')->data($heap->{'CONFIG'}->{'username'});
+ 
+@@ -207,7 +207,7 @@
+ 
+ 	my $cfg = $heap->{'CONFIG'};
+ 	
+-	my $element = XNode->new('stream:stream',
++	my $element = POE::Filter::XML::Node->new('stream:stream',
+ 	['to', $cfg->{'hostname'}, 
+ 	'xmlns', $cfg->{'xmlns'}, 
+ 	'xmlns:stream', $cfg->{'stream'}]
+@@ -240,7 +240,7 @@
+ 	if ($heap->{'CONFIG'}->{'debug'})
+ 	{
+ 		my $xml;
+-		if (ref $data eq 'XNode')
++		if (ref $data eq 'POE::Filter::XML::Node')
+ 		{
+ 			$xml = $data->to_str();
+ 		} else {
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/XMPP.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/XMPP.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Client/XMPP.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Client/XMPP.pm	2006-07-12 22:54:33.000000000 +0200
+@@ -1,6 +1,5 @@
+ package POE::Component::Jabber::Client::XMPP;
+ use Filter::Template;
+-const XNode POE::Filter::XML::Node
+ use warnings;
+ use strict;
+ 
+@@ -196,7 +195,7 @@
+ 
+ 	$heap->{'challenge'} = $sasl;
+ 
+-	my $node = XNode->new('auth', ['xmlns', +NS_XMPP_SASL, 'mechanism', $mech]);
++	my $node = POE::Filter::XML::Node->new('auth', ['xmlns', +NS_XMPP_SASL, 'mechanism', $mech]);
+ 
+ 	if ($mech eq "PLAIN") 
+ 	{
+@@ -244,7 +243,7 @@
+ 
+ 	my $cfg = $heap->{'CONFIG'};
+ 
+-	my $element = XNode->new('stream:stream',
++	my $element = POE::Filter::XML::Node->new('stream:stream',
+ 	['to', $cfg->{'hostname'}, 
+ 	'xmlns', $cfg->{'xmlns'}, 
+ 	'xmlns:stream', $cfg->{'stream'}, 
+@@ -282,7 +281,7 @@
+ 	{
+ 		my $xml;
+ 		
+-		if (ref $data eq 'XNode')
++		if (ref $data eq 'POE::Filter::XML::Node')
+ 		{
+ 			$xml = $data->to_str();
+ 		
+@@ -324,7 +323,7 @@
+ 	$step = encode_base64($step);
+ 	$step =~ s/\s+//go;
+ 
+-	my $response = XNode->new('response', ['xmlns', +NS_XMPP_SASL]);
++	my $response = POE::Filter::XML::Node->new('response', ['xmlns', +NS_XMPP_SASL]);
+ 	$response->data($step);
+ 
+ 	$kernel->yield('output_handler', $response);
+@@ -399,7 +398,7 @@
+ 
+ 		if(exists($clist->{'starttls'}))
+ 		{
+-			my $starttls = XNode->new('starttls', ['xmlns', +NS_XMPP_TLS]);
++			my $starttls = POE::Filter::XML::Node->new('starttls', ['xmlns', +NS_XMPP_TLS]);
+ 			$kernel->yield('output_handler', $starttls);
+ 		
+ 		} elsif(exists($clist->{'mechanisms'})) {
+@@ -418,7 +417,7 @@
+ 		
+ 		} elsif(exists($clist->{'bind'})) {
+ 		
+-			my $iq = XNode->new('iq', ['type', +IQ_SET]);
++			my $iq = POE::Filter::XML::Node->new('iq', ['type', +IQ_SET]);
+ 			$iq->insert_tag('bind', ['xmlns', +NS_XMPP_BIND])
+ 				->insert_tag('resource')
+ 				->data($heap->{'CONFIG'}->{'resource'});
+@@ -452,7 +451,7 @@
+ 		{
+ 			$heap->{'JID'} = $node->get_tag('bind')->get_tag('jid')->data();
+ 
+-			my $iq = XNode->new('iq', ['type', +IQ_SET]);
++			my $iq = POE::Filter::XML::Node->new('iq', ['type', +IQ_SET]);
+ 			$iq->insert_tag('session', ['xmlns', +NS_XMPP_SESSION]);
+ 
+ 			$kernel->yield('return_to_sender', 'session_establish', $iq);
+@@ -474,7 +473,7 @@
+ 
+ 		if($error->attr('type') eq 'modify')
+ 		{
+-			my $iq = XNode->new('iq', ['type', +IQ_SET]);
++			my $iq = POE::Filter::XML::Node->new('iq', ['type', +IQ_SET]);
+ 			$iq->insert_tag('bind', ['xmlns', +NS_XMPP_BIND])
+ 				->insert_tag('resource')
+ 				->data(md5_hex(time().rand().$$.rand().$^T.rand()));
+@@ -486,7 +485,7 @@
+ 			
+ 			if(exists($clist->{'conflict'}))
+ 			{
+-				my $iq = XNode->new('iq', ['type', +IQ_SET]);
++				my $iq = POE::Filter::XML::Node->new('iq', ['type', +IQ_SET]);
+ 				$iq->insert_tag('bind', ['xmlns', +NS_XMPP_BIND])
+ 					->insert_tag('resource')
+ 					->data(md5_hex(time().rand().$$.rand().$^T.rand()));
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Server/Socket.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Server/Socket.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Server/Socket.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Server/Socket.pm	2006-07-12 22:53:08.000000000 +0200
+@@ -1,6 +1,5 @@
+ package POE::Component::Jabber::Server::Socket;
+ use Filter::Template;
+-const XNode POE::Filter::XML::Node
+ use strict;
+ use warnings;
+ 
+@@ -170,7 +169,7 @@
+ {
+ 	my ($kernel, $heap) = @_[KERNEL, HEAP];
+ 
+-	my $stream = XNode->new('stream:stream')->stream_start(1);
++	my $stream = POE::Filter::XML::Node->new('stream:stream')->stream_start(1);
+ 	$stream->insert_attrs(
+ 	['xmlns', +NS_JABBER_CLIENT,
+ 	'xmlns:stream', +XMLNS_STREAM,
+@@ -184,7 +183,7 @@
+ {
+ 	my ($kernel, $heap) = @_[KERNEL, HEAP];
+ 	
+-	my $feats = XNode->new('stream:features');
++	my $feats = POE::Filter::XML::Node->new('stream:features');
+ 	
+ 	if($heap->{'STAGE'} == 1)
+ 	{
+@@ -263,7 +262,7 @@
+ 		
+ 	} elsif($data->name() eq 'starttls' and $heap->{'STAGE'} == 1) {
+ 
+-		my $proceed = XNode->new('proceed', ['xmlns', +NS_XMPP_TLS]);
++		my $proceed = POE::Filter::XML::Node->new('proceed', ['xmlns', +NS_XMPP_TLS]);
+ 
+ 		$kernel->yield('output_handler', $proceed);
+ 		$heap->{'STAGE'}++;
+@@ -274,7 +273,7 @@
+ 		if(!exists($attrs->{'mechanism'}) or 
+ 			$attrs->{'mechanism'} ne 'DIGEST-MD5')
+ 		{
+-			my $fail = XNode->new('failure', ['xmlns', +NS_XMPP_SASL]);
++			my $fail = POE::Filter::XML::Node->new('failure', ['xmlns', +NS_XMPP_SASL]);
+ 			$fail->insert_tag('invalid-mechanism');
+ 
+ 			$kernel->call($session, 'stream_error', 'wait', $fail);
+@@ -288,7 +287,7 @@
+ 
+ 		$sasl = &encode_base64($sasl);
+ 
+-		my $challenge = XNode->new('challenge', ['xmlns', +NS_XMPP_SASL])
++		my $challenge = POE::Filter::XML::Node->new('challenge', ['xmlns', +NS_XMPP_SASL])
+ 			->data($sasl);
+ 
+ 		$heap->{'STAGE'}++;
+@@ -308,7 +307,7 @@
+ 			
+ 			if(exists($hash->{$attrib}))
+ 			{
+-				my $fail = XNode->new('failure', ['xmlns', +NS_XMPP_SASL]);
++				my $fail = POE::Filter::XML::Node->new('failure', ['xmlns', +NS_XMPP_SASL]);
+ 				$fail->insert_tag('temporary-auth-failure');
+ 
+ 				$kernel->call($session, 'stream_error', 'wait', $fail);
+@@ -323,7 +322,7 @@
+ 		!exists($hash->{'response'}) or !exists($hash->{'charset'}) or
+ 		!exists($hash->{'nc'}))
+ 		{
+-			my $fail = XNode->new('failure', ['xmlns', +NS_XMPP_SASL]);
++			my $fail = POE::Filter::XML::Node->new('failure', ['xmlns', +NS_XMPP_SASL]);
+ 			$fail->insert_tag('temporary-auth-failure');
+ 
+ 			$kernel->call($session, 'stream_error', 'wait', $fail);
+@@ -362,7 +361,7 @@
+ 			
+ 			if($check ne $hash->{'response'})
+ 			{
+-				my $fail = XNode->new('failure', ['xmlns', +NS_XMPP_SASL]);
++				my $fail = POE::Filter::XML::Node->new('failure', ['xmlns', +NS_XMPP_SASL]);
+ 				$fail->insert_tag('temporary-auth-failure');
+ 
+ 				$kernel->call($session, 'stream_error', 'wait', $fail);
+@@ -382,7 +381,7 @@
+ 				);
+ 				
+ 				my $rsvp = 'rspauth="'.$rspauth.'"';
+-				my $challenge = XNode->new('challenge', 
++				my $challenge = POE::Filter::XML::Node->new('challenge', 
+ 				['xmlns', +NS_XMPP_SASL])->data(&encode_base64($rsvp));
+ 
+ 				$kernel->yield('output_handler', $challenge);
+@@ -396,7 +395,7 @@
+ 		}
+ 	} elsif($data->name() eq 'response' and $heap->{'STAGE'} == 5) {
+ 
+-		my $success = XNode->new('success', ['xmlns', +NS_XMPP_SASL]);
++		my $success = POE::Filter::XML::Node->new('success', ['xmlns', +NS_XMPP_SASL]);
+ 		$kernel->yield('output_handler', $success);
+ 		$heap->{'STAGE'}++;
+ 	
+@@ -452,7 +451,7 @@
+ 			$kernel->yield('output_handler', $condition);
+ 			$kernel->yield('kill_socket');
+ 			$kernel->yield('output_handler', 
+-				XNode->new('stream:stream')->stream_end(1));
++				POE::Filter::XML::Node->new('stream:stream')->stream_end(1));
+ 
+ 		} else {
+ 
+@@ -461,9 +460,9 @@
+ 	
+ 	} elsif($type eq 'cancel') {
+ 
+-		my $error = XNode->new('stream:error');
++		my $error = POE::Filter::XML::Node->new('stream:error');
+ 		$error->insert_tag($condition, ['xmlns', +NS_XMPP_STREAMS]);
+-		my $end = XNode->new('stream:stream')->stream_end(1);
++		my $end = POE::Filter::XML::Node->new('stream:stream')->stream_end(1);
+ 		
+ 		$kernel->yield('output_handler', $error);
+ 		$kernel->yield('kill_socket');
+diff -Nur POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Server.pm POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Server.pm
+--- POE-Component-Jabber-1.21.ori/lib/POE/Component/Jabber/Server.pm	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/lib/POE/Component/Jabber/Server.pm	2006-07-12 22:51:35.000000000 +0200
+@@ -1,16 +1,15 @@
+ package POE::Component::Jabber::Server;
+ use Filter::Template;
+-const PCJS POE::Component::Jabber::Server
+ use warnings;
+ use strict;
+ 
+ use POE;
+-use PCJS::InputHandler;
+-use PCJS::RouteProcessor;
+-use PCJS::RouteTable;
+-use PCJS::RosterTable;
+-use PCJS::SelfRouter;
+-use PCJS::SocketServer;
++use POE::Component::Jabber::Server::InputHandler;
++use POE::Component::Jabber::Server::RouteProcessor;
++use POE::Component::Jabber::Server::RouteTable;
++use POE::Component::Jabber::Server::RosterTable;
++use POE::Component::Jabber::Server::SelfRouter;
++use POE::Component::Jabber::Server::SocketServer;
+ 
+ our $VERSION = '1.21';
+ 
+@@ -28,13 +27,13 @@
+ 		$config->{$key} = $value;
+ 	}
+ 
+-	my $route = PCJS::RouteTable->new($config);
+-	my $roster = PCJS::RosterTable->new($config);
++	my $route = POE::Component::Jabber::Server::RouteTable->new($config);
++	my $roster = POE::Component::Jabber::Server::RosterTable->new($config);
+ 
+-	PCJS::InputHandler->new($config, $route);
+-	PCJS::SocketServer->new($config, $route);
+-	PCJS::SelfRouter->new($config, $route);
+-	PCJS::RouteProcessor->new($config, $route);
++	POE::Component::Jabber::Server::InputHandler->new($config, $route);
++	POE::Component::Jabber::Server::SocketServer->new($config, $route);
++	POE::Component::Jabber::Server::SelfRouter->new($config, $route);
++	POE::Component::Jabber::Server::RouteProcessor->new($config, $route);
+ 
+ }
+ 
