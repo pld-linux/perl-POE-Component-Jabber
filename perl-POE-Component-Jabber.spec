@@ -56,16 +56,14 @@ POE::Component::Jabber poprzez rejestracjê dla zdarzenia IQ.
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
 
-
-# KUUUUUUUUUUUUUUUUUUUUUUUUU
 # rpmowy system wykrywani zaleznosci nie radzi sobie
-# z use const ...
-# dlatego ta paczka jest broken
-# solution sa 2
-# noautodep, i reczne
-# patch naprawiajacy use wewnatrz konstrukcji
-# ja wole v(2)
-# dobranoc
+# rpm dep lookup system dont work properly when
+# package Foo::Bar; is declared in some files
+# but other use it via use const .. then use FB::something
+# there are 2 solutions, first one, 
+# disable autodeps for this package, and add manually
+# another way, patch perl modules to avoid use const
+# i prefer second way
 
 %build
 %{__perl} Makefile.PL \
