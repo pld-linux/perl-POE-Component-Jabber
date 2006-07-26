@@ -1,0 +1,50 @@
+diff -Nur POE-Component-Jabber-1.21.ori/examples/COMPTester.pl POE-Component-Jabber-1.21.mod/examples/COMPTester.pl
+--- POE-Component-Jabber-1.21.ori/examples/COMPTester.pl	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/examples/COMPTester.pl	2006-07-26 20:55:07.000000000 +0200
+@@ -1,6 +1,5 @@
+ #!/usr/bin/perl
+ 
+-use POE::Preprocessor;
+ const XNode POE::Filter::XML::Node
+ 
+ use warnings;
+diff -Nur POE-Component-Jabber-1.21.ori/examples/J2Tester.pl POE-Component-Jabber-1.21.mod/examples/J2Tester.pl
+--- POE-Component-Jabber-1.21.ori/examples/J2Tester.pl	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/examples/J2Tester.pl	2006-07-26 20:55:10.000000000 +0200
+@@ -1,6 +1,5 @@
+ #!/usr/bin/perl
+ 
+-use POE::Preprocessor;
+ const XNode POE::Filter::XML::Node
+ 
+ use warnings;
+diff -Nur POE-Component-Jabber-1.21.ori/examples/LEGACYTester.pl POE-Component-Jabber-1.21.mod/examples/LEGACYTester.pl
+--- POE-Component-Jabber-1.21.ori/examples/LEGACYTester.pl	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/examples/LEGACYTester.pl	2006-07-26 20:55:11.000000000 +0200
+@@ -1,6 +1,5 @@
+ #!/usr/bin/perl
+ 
+-use POE::Preprocessor;
+ const XNode POE::Filter::XML::Node
+ 
+ use warnings;
+diff -Nur POE-Component-Jabber-1.21.ori/examples/XMPPSimpleTester.pl POE-Component-Jabber-1.21.mod/examples/XMPPSimpleTester.pl
+--- POE-Component-Jabber-1.21.ori/examples/XMPPSimpleTester.pl	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/examples/XMPPSimpleTester.pl	2006-07-26 20:55:15.000000000 +0200
+@@ -1,6 +1,5 @@
+ #!/usr/bin/perl
+ 
+-use POE::Preprocessor;
+ const XNode POE::Filter::XML::Node
+ 
+ use warnings;
+diff -Nur POE-Component-Jabber-1.21.ori/examples/XMPPTester.pl POE-Component-Jabber-1.21.mod/examples/XMPPTester.pl
+--- POE-Component-Jabber-1.21.ori/examples/XMPPTester.pl	2006-05-01 03:50:49.000000000 +0200
++++ POE-Component-Jabber-1.21.mod/examples/XMPPTester.pl	2006-07-26 20:55:19.000000000 +0200
+@@ -1,6 +1,5 @@
+ #!/usr/bin/perl
+ 
+-use POE::Preprocessor;
+ const XNode POE::Filter::XML::Node
+ 
+ use warnings;
