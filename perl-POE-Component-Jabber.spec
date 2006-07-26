@@ -9,12 +9,13 @@ Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
 Summary(pl):	POE::Component::Jabber - komponent POE do dostêpu do serwerów Jabbera
 Name:		perl-POE-Component-Jabber
 Version:	1.21
-Release:	1.1
+Release:	1.2
 License:	GPL
 Group:		Development/Languages/Perl
 Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version}.tar.gz
 # Source0-md5:	75196e23db297a2b07b1d58a866b03d7
 Patch0:		%{name}-const.patch
+Patch1:		%{name}-examples.patch
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	perl-Module-Build
@@ -56,16 +57,10 @@ POE::Component::Jabber poprzez rejestracjê dla zdarzenia IQ.
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
+# rpm problems fixed by following patch
 %patch0 -p1
-
-# rpmowy system wykrywani zaleznosci nie radzi sobie
-# rpm dep lookup system dont work properly when
-# package Foo::Bar; is declared in some files
-# but other use it via use const .. then use FB::something
-# there are 2 solutions, first one, 
-# disable autodeps for this package, and add manually
-# another way, patch perl modules to avoid use const
-# i prefer second way
+# this one allows to run examples on current poe (no POE::Preprocessor)
+%patch1 -p1
 
 %build
 %{__perl} Makefile.PL \
