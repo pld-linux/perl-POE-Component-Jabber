@@ -22,7 +22,7 @@ BuildRequires:	perl-Module-Build
 %if %{with tests}
 BuildRequires:	perl-Digest-SHA1 >= 2.11
 BuildRequires:	perl-Jabber-Connection >= 0.02
-BuildRequires:	perl-POE >= 0.34_01
+BuildRequires:	perl-POE >= 1:0.3401
 BuildRequires:	perl-POE-Filter-XML >= 0.29
 BuildRequires:	perl-XML-Parser >= 2.29
 %endif
