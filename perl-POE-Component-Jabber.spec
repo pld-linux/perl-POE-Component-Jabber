@@ -6,7 +6,7 @@
 %define		pdir	POE
 %define		pnam	Component-Jabber
 Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
-Summary(pl):	POE::Component::Jabber - komponent POE do dostêpu do serwerów Jabbera
+Summary(pl.UTF-8):   POE::Component::Jabber - komponent POE do dostÄ™pu do serwerÃ³w Jabbera
 Name:		perl-POE-Component-Jabber
 Version:	1.21
 Release:	2
@@ -42,18 +42,18 @@ Jabber server. This would be a good module to look at as it
 does it in much the way an application would interface with
 POE::Component::Jabber by registering for the IQ event.
 
-%description -l pl
-POE::Component::Jabber jest w du¿ej czê¶ci oparty na
-POE::Component::IRC i u¿ywa w wiêkszo¶ci tego samego modelu. Funkcje
-uwierzytelniania s± inspirowane Jabber::Connection.
+%description -l pl.UTF-8
+POE::Component::Jabber jest w duÅ¼ej czÄ™Å›ci oparty na
+POE::Component::IRC i uÅ¼ywa w wiÄ™kszoÅ›ci tego samego modelu. Funkcje
+uwierzytelniania sÄ… inspirowane Jabber::Connection.
 
-Do³±czony jest POE::Filter::Jabber, wymagaj±cy XML::Parser, który
-wysy³a i odbiera dane jako obiekty Jabber::NodeFactory::Node.
+DoÅ‚Ä…czony jest POE::Filter::Jabber, wymagajÄ…cy XML::Parser, ktÃ³ry
+wysyÅ‚a i odbiera dane jako obiekty Jabber::NodeFactory::Node.
 
-POE::Component::Jabber::Auth zawiera implementacjê uwierzytelniania
-wzglêdem serwera Jabbera. To jest dobry modu³ do ogl±dania, jako ¿e
-robi to podobnie jak aplikacja, która wspó³pracowa³aby z
-POE::Component::Jabber poprzez rejestracjê dla zdarzenia IQ.
+POE::Component::Jabber::Auth zawiera implementacjÄ™ uwierzytelniania
+wzglÄ™dem serwera Jabbera. To jest dobry moduÅ‚ do oglÄ…dania, jako Å¼e
+robi to podobnie jak aplikacja, ktÃ³ra wspÃ³Å‚pracowaÅ‚aby z
+POE::Component::Jabber poprzez rejestracjÄ™ dla zdarzenia IQ.
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
