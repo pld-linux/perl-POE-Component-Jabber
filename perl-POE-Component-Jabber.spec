@@ -6,7 +6,7 @@
 %define		pdir	POE
 %define		pnam	Component-Jabber
 Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
-Summary(pl.UTF-8):   POE::Component::Jabber - komponent POE do dostępu do serwerów Jabbera
+Summary(pl.UTF-8):	POE::Component::Jabber - komponent POE do dostępu do serwerów Jabbera
 Name:		perl-POE-Component-Jabber
 Version:	1.21
 Release:	2
