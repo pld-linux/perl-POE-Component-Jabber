@@ -1,10 +1,10 @@
 #
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
-#
-%include	/usr/lib/rpm/macros.perl
+
 %define		pdir	POE
 %define		pnam	Component-Jabber
+%include	/usr/lib/rpm/macros.perl
 Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
 Summary(pl.UTF-8):	POE::Component::Jabber - komponent POE do dostępu do serwerów Jabbera
 Name:		perl-POE-Component-Jabber
@@ -16,9 +16,10 @@ Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version
 # Source0-md5:	75196e23db297a2b07b1d58a866b03d7
 Patch0:		%{name}-const.patch
 Patch1:		%{name}-examples.patch
+URL:		http://search.cpan.org/dist/POE-Component-Jabber/
+BuildRequires:	perl-Module-Build
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
-BuildRequires:	perl-Module-Build
 %if %{with tests}
 BuildRequires:	perl-Digest-SHA1 >= 2.11
 BuildRequires:	perl-Jabber-Connection >= 0.02
@@ -34,13 +35,13 @@ POE::Component::Jabber is heavily based on POE::Component::IRC and
 uses much the same event model. Authentication routines are inspired
 by Jabber::Connection.
 
-POE::Filter::Jabber is provided which requires XML::Parser and
-sends and receives data as Jabber::NodeFactory::Node objects.
+POE::Filter::Jabber is provided which requires XML::Parser and sends
+and receives data as Jabber::NodeFactory::Node objects.
 
-POE::Component::Jabber::Auth implements authentication with the
-Jabber server. This would be a good module to look at as it
-does it in much the way an application would interface with
-POE::Component::Jabber by registering for the IQ event.
+POE::Component::Jabber::Auth implements authentication with the Jabber
+server. This would be a good module to look at as it does it in much
+the way an application would interface with POE::Component::Jabber by
+registering for the IQ event.
 
 %description -l pl.UTF-8
 POE::Component::Jabber jest w dużej części oparty na
@@ -75,7 +76,7 @@ POE::Component::Jabber poprzez rejestrację dla zdarzenia IQ.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT 
+	DESTDIR=$RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}
 cp -r examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
