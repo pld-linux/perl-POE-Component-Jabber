@@ -4,7 +4,6 @@
 
 %define		pdir	POE
 %define		pnam	Component-Jabber
-%include	/usr/lib/rpm/macros.perl
 Summary:	POE::Component::Jabber - POE component for accessing Jabber servers
 Summary(pl.UTF-8):	POE::Component::Jabber - komponent POE do dostępu do serwerów Jabbera
 Name:		perl-POE-Component-Jabber
